@@ -3,10 +3,28 @@
  * Tokenizer Spec.
  */
 const Spec = [
+    //-----------------------------------------
+    // Whitespaces:
+    
+    [/^\s+/, null],
+
+    //-----------------------------------------
+    // Comments:
+    
+    //Skip Single Line Comments
+    [/^\/\/.*/, null],
+    
+    // Skip Multi Line Comments
+    [/^\/\*([^*]|\*[^/])*\*\//, null],
+
+    //-----------------------------------------
     // Numbers:
+    
     [/^\d+/, 'NUMBER'],
 
+    //-----------------------------------------
     // Strings:
+    
     [/^"[^"]*"/, 'STRING'],
     [/^'[^']*'/, 'STRING'],
 ];
@@ -56,12 +74,20 @@ class Tokenizer {
         for (const [regexp, tokenType] of Spec) {
             const tokenValue = this._match(regexp, string);
 
-            if (tokenValue != null) {
-                return {
-                    type: tokenType,
-                    value: tokenValue,
-                };
+            if (tokenValue == null) {
+                continue;
             }
+
+            // Skip whitespaces.
+            if (tokenType == null) {
+                return this.getNextToken();
+            }
+            
+            return {
+                type: tokenType,
+                value: tokenValue,
+            };
+            
         }
 
         throw new SyntaxError(`Unexpected token: ${string[0]}`);
