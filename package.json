@@ -1,0 +1,25 @@
+{
+  "name": "letter-rdp",
+  "version": "1.0.0",
+  "description": "A recursive descent parser, implemented for learning purpose",
+  "main": "__tests__/run.js",
+  "scripts": {
+    "start": "node __tests__/run.js",
+    "test": "node __tests__/run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vishalsahu5/letter-rdp.git"
+  },
+  "keywords": [
+    "compilers",
+    "parsing",
+    "javascript"
+  ],
+  "author": "Sarthak Sahu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vishalsahu5/letter-rdp/issues"
+  },
+  "homepage": "https://github.com/vishalsahu5/letter-rdp#readme"
+}
