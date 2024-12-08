@@ -18,6 +18,13 @@ class Tokenizer {
     }
 
     /**
+     * Whether the tokenizer has reached the end of the file.
+     */
+    isEOF() {
+        return this._cursor === this._string.length;
+    }
+
+    /**
      * Determines if there are more tokens.
     */
     hasMoreTokens() {  
@@ -44,6 +51,19 @@ class Tokenizer {
             return {
                 type: 'NUMBER',
                 value: number,
+            };
+        }
+
+        //String:
+        if (string[0] === '"') {
+            let s = '';
+            do {
+                s += string[this._cursor++];
+            } while (string[this._cursor] !== '"' && !this.isEOF());
+            s += string[this._cursor++];
+            return {
+                type: 'STRING', 
+                value: s,
             };
         }
     }
