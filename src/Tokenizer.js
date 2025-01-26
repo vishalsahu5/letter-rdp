@@ -5,15 +5,15 @@
 const Spec = [
     //-----------------------------------------
     // Whitespaces:
-    
+
     [/^\s+/, null],
 
     //-----------------------------------------
     // Comments:
-    
+
     //Skip Single Line Comments
     [/^\/\/.*/, null],
-    
+
     // Skip Multi Line Comments
     [/^\/\*([^*]|\*[^/])*\*\//, null],
 
@@ -21,15 +21,17 @@ const Spec = [
     // Symbols, delimiters:
 
     [/^;/, ';'],
+    [/^\{/, '{'],
+    [/^\}/, '}'],
 
     //-----------------------------------------
     // Numbers:
-    
+
     [/^\d+/, 'NUMBER'],
 
     //-----------------------------------------
     // Strings:
-    
+
     [/^"[^"]*"/, 'STRING'],
     [/^'[^']*'/, 'STRING'],
 ];
@@ -47,7 +49,7 @@ class Tokenizer {
         this._string = '';
         this._cursor = 0;
     }
-    
+
     init(string) {
         this._string = string;
         this._cursor = 0;
@@ -63,7 +65,7 @@ class Tokenizer {
     /**
      * Determines if there are more tokens.
     */
-    hasMoreTokens() {  
+    hasMoreTokens() {
         return this._cursor < this._string.length;
     }
 
@@ -75,7 +77,7 @@ class Tokenizer {
             return null;
         }
 
-        const string  = this._string.slice(this._cursor);
+        const string = this._string.slice(this._cursor);
         for (const [regexp, tokenType] of Spec) {
             const tokenValue = this._match(regexp, string);
 
@@ -87,12 +89,12 @@ class Tokenizer {
             if (tokenType == null) {
                 return this.getNextToken();
             }
-            
+
             return {
                 type: tokenType,
                 value: tokenValue,
             };
-            
+
         }
 
         throw new SyntaxError(`Unexpected token: ${string[0]}`);
