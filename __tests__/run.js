@@ -16,7 +16,9 @@ function exec() {
         /**
          * Documentation Comment
          */
-        " 42 "
+        "hello";
+
+        " 42 ";
     `;
 
     const ast = parser.parse(program);
